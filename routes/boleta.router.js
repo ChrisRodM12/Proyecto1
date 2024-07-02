@@ -3,21 +3,15 @@ const router = express.Router();
 
 var boleta = [{}];
 
-router.get('/', (req, res) => {
-    res.json(boleta);
-})
-
 router.post('/', (req, res) => {
 
     const body = req.body;
     boleta.push({
         id: req.body.id,
-        id_pelicula: req.body.id_pelicula,
         id_puesto: req.body.id_puesto,
         id_cliente: req.body.id_cliente,
         id_taquillero: req.body.id_taquillero,
         id_detalleboleta: req.body.id_detalleboleta,
-        precio: req.body.precio
     })
     res.json({
         message: 'boleta agregada',
@@ -27,20 +21,24 @@ router.post('/', (req, res) => {
     })
 })
 
+router.get('/', (req, res) => {
+    res.json(boleta);
+})
+
 router.patch('/:id', (req, res) => {
 
     const id = parseInt(req.params.id);
-    const boleta = boleta.find(p => p.id === id);
+    const boletas = boleta.find(p => p.id === id);
 
-    if (!boleta) {
+    if (!boletas) {
 
     }
 
-    const actualizacionboleta = ['id', 'id_pelicula', 'id_puesto', 'id_cliente', 'id_taquillero', 'id_detalleboleta', 'precio'];
+    const actualizacionboleta = ['id', 'id_puesto', 'id_cliente', 'id_taquillero', 'id_detalleboleta'];
 
     actualizacionboleta.forEach(campo => {
         if (req.body[campo] !== undefined) {
-            boleta[campo] = req.body[campo];
+            boletas[campo] = req.body[campo];
         }
     });
 
@@ -65,6 +63,20 @@ router.delete('/:id', (req, res) => {
             data: boletaEliminada
         });
     }
+});
+
+//Endpoint#1 Mostrar por medio id de la venta nos diga quien fue el id_taquillero
+router.get('/:id/id_taquillero', (req, res) => {
+    const id = parseInt(req.params.id);
+    const hallarVendedor = boleta.find(venta = venta.id == id)
+    res.json(hallarVendedor.id_taquillero)
+});
+
+//Endpoint#2 Mostrar por medio de id_cliente cual es el puesto asignado
+router.get('/:id/id_puesto', (req, res) => {
+    const id = parseInt(req.params.id);
+    const hallarPuesto = boleta.find(venta = venta.id == id)
+    res.json(hallarPuesto.id_puesto)
 });
 
 module.exports = router

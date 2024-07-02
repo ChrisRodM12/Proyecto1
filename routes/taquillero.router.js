@@ -3,10 +3,6 @@ const router  = express.Router();
 
 var taquillero = [{}];
 
-router.post('/',(req,res)=>{
-    
-})
-
 router.get('/', (req, res) => {
     res.json(taquillero)
 })
@@ -22,16 +18,16 @@ router.post('/', (req, res) => {
     })
     res.json({
         message: 'Taquillero agregado',
-        data: body.id
+        data: body.taquillero
     })
 })
 
 router.patch('/:id', (req, res) => {
 
     const id = parseInt(req.params.id);
-    const taquillero = taquillero.find(p => p.id === id);
+    const taquilleros = taquillero.find(p => p.id === id);
 
-    if (!taquillero) {
+    if (!taquilleros) {
 
     }
 
@@ -39,13 +35,13 @@ router.patch('/:id', (req, res) => {
 
     actualizaciontaquillero.forEach(campo => {
         if (req.body[campo] !== undefined) {
-            taquillero[campo] = req.body[campo];
+            taquilleros[campo] = req.body[campo];
         }
     });
 
     res.json({
         message: 'taquillero actualizado',
-        data: taquillero
+        data: taquilleros
     });
 });
 

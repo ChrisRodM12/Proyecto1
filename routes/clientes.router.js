@@ -3,20 +3,16 @@ const router = express.Router();
 
 var cliente = [{}];
 
-router.get('/', (req, res) => {
-    res.json(cliente)
-})
-
 router.post('/', (req, res) => {
 
     const body = req.body;
     cliente.push({
         id: req.body.id,
         nombre: req.body.nombre,
-        apellido: req.body.sipnosis,
-        edad: req.body.clasificacion,
-        telefono: req.body.genero,
-        correo: req.body.idioma
+        apellido: req.body.apellido,
+        edad: req.body.edad,
+        telefono: req.body.telefono,
+        correo: req.body.correo
     })
     res.json({
         message: 'Cliente agregado',
@@ -24,12 +20,17 @@ router.post('/', (req, res) => {
     })
 })
 
+router.get('/', (req, res) => {
+    res.json(cliente)
+})
+
+
 router.patch('/:id', (req, res) => {
 
     const id = parseInt(req.params.id);
-    const cliente = cliente.find(p => p.id === id);
+    const clientes = cliente.find(p => p.id === id);
 
-    if (!cliente) {
+    if (!clientes) {
 
     }
 
@@ -37,13 +38,13 @@ router.patch('/:id', (req, res) => {
 
     actualizacionCliente.forEach(campo => {
         if (req.body[campo] !== undefined) {
-            cliente[campo] = req.body[campo];
+            clientes[campo] = req.body[campo];
         }
     });
 
     res.json({
         message: 'cliente actualizado',
-        data: pelicula
+        data: clientes
     });
 });
 

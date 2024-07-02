@@ -3,10 +3,6 @@ const router = express.Router();
 
 var fila = [{}]
 
-router.get('/', (req, res) => {
-    res.json(fila)
-})
-
 router.post('/', (req, res) => {
     
     const body = req.body;
@@ -22,12 +18,16 @@ router.post('/', (req, res) => {
     })
 })
 
+router.get('/', (req, res) => {
+    res.json(fila)
+})
+
 router.patch('/:id', (req, res) => {
 
     const id = parseInt(req.params.id);
-    const fila = fila.find(s => s.id === id);
+    const filas = fila.find(s => s.id === id);
 
-    if (!fila) {
+    if (!filas) {
 
     }
 
@@ -35,13 +35,13 @@ router.patch('/:id', (req, res) => {
 
     actualizacionFila.forEach(campo => {
         if (req.body[campo] !== undefined) {
-            fila[campo] = req.body[campo];
+            filas[campo] = req.body[campo];
         }
     });
 
     res.json({
         message: 'Fila actualizada',
-        data: fila
+        data: filas
     });
 });
 
@@ -57,7 +57,7 @@ router.delete('/:id', (req, res) => {
 
         res.json({
             message: 'Fila eliminada',
-            data: filaIndex
+            data: filaEliminada
         });
     }
 });

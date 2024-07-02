@@ -1,15 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-var peliculas = [];
-
-router.get('/', (req, res) => {
-    res.json(peliculas);
-})
+var pelicula = [];
 
 router.post('/', (req, res) => {
     const body = req.body;
-    peliculas.push({
+    pelicula.push({
         id: req.body.id,
         titulo: req.body.titulo,
         genero: req.body.genero,
@@ -24,10 +20,11 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     const id = req.params.id;
-    const pelicula = peliculas.find(pelicula => pelicula.id == id);
-    res.json(pelicula);
+    const peliculas = pelicula.find(pelicula => pelicula.id == id);
+    res.json(peliculas);
 });
 
+//Otra forma de resolver
 /* router.patch('/', (req,res)=>{
     const {id} = req.params.id;
     const body = req.body;
@@ -52,15 +49,15 @@ router.get('/', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     const { id } = req.params.id;
-    const index = peliculas.findIndex(pelicula => pelicula.id == id);
-    peliculas.splice(index, 1);
+    const index = pelicula.findIndex(pelicula => pelicula.id == id);
+    pelicula.splice(index, 1);
     res.json({ message: 'Pelicula eliminada' });
 })
 
 //Endpoint#1
 router.get('/:titulo/clasificacion', (req, res) => {
     const titulo = req.params.titulo;
-    const hallarId = peliculas.find(peliculas => peliculas.titulo == titulo)
+    const hallarId = pelicula.find(pelicula => pelicula.titulo == titulo)
     res.json({
         clasificacion: hallarId.clasificacion
     });
@@ -68,13 +65,13 @@ router.get('/:titulo/clasificacion', (req, res) => {
 //Endpoint#2
 router.get('/:clasificacion', (req, res) => {
     const clasificacion = req.params.clasificacion;
-    const hallarClasificacion = peliculas.find(peliculas => peliculas.clasificacion == clasificacion)
+    const hallarClasificacion = pelicula.find(pelicula => pelicula.clasificacion == clasificacion)
     res.json(hallarClasificacion.nombre);
 })
 //Endpoint#3
 router.get('/:duracion', (req, res) => {
     const director = req.params.director;
-    const hallarId = peliculas.find(peliculas => peliculas.director == director)
+    const hallarId = pelicula.find(pelicula => pelicula.director == director)
     res.json({
         duracion: hallarId.duracion
     });
@@ -82,7 +79,7 @@ router.get('/:duracion', (req, res) => {
 //Endpoint#4
 router.get('/:genero/clasificacion', (req, res) => {
     const genero = req.params.genero;
-    const hallarId = peliculas.find(peliculas => peliculas.genero == genero)
+    const hallarId = pelicula.find(pelicula => pelicula.genero == genero)
     res.json({
         clasificacion: hallarId.clasificacion
     });
@@ -90,7 +87,7 @@ router.get('/:genero/clasificacion', (req, res) => {
 //Endpoint#5
 router.get('/:clasificacion/duracion', (req, res) => {
     const clasificacion = req.params.clasificacion;
-    const hallarId = peliculas.find(peliculas => peliculas.clasificacion == clasificacion)
+    const hallarId = pelicula.find(peliculas => pelicula.clasificacion == clasificacion)
     res.json({
         duracion: hallarId.duracion
     });

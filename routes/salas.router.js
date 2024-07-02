@@ -17,16 +17,16 @@ router.post('/', (req, res) => {
     })
     res.json({
         message: 'Sala Creada',
-        data: body.id
+        data: body.sala
     })
 })
 
 router.patch('/:id', (req, res) => {
 
     const id = parseInt(req.params.id);
-    const sala = sala.findIndex(s => s.id === id);
+    const salas = sala.findIndex(s => s.id === id);
 
-    if (!sala) {
+    if (!salas) {
 
     }
 
@@ -34,13 +34,13 @@ router.patch('/:id', (req, res) => {
 
     actualizacionSala.forEach(campo => {
         if (req.body[campo] !== undefined) {
-            sala[campo] = req.body[campo];
+            salas[campo] = req.body[campo];
         }
     });
 
     res.json({
         message: 'Sala actualizada',
-        data: sala
+        data: salas
     });
 })
 
@@ -55,7 +55,31 @@ router.delete('/:id', (req, res) => {
         const salaEliminada = sala.splice(salaIndex, 1);
         res.json({
             message: 'Sala eliminada',
-            data: salaIndex
+            data: salaEliminada
+        });
+    }
+})
+
+//Endpoint#1 apartir de id_pelicula cual es el nombresala
+router.get('/:id_pelicula', (req, res) => {
+    const id_pelicula = parseInt(req.params.id_pelicula);
+    const sala = sala.filter(s => s.id_pelicula === id_pelicula);
+    res.json({
+        message: 'Sala encontrada',
+        data: sala
+    });
+})
+
+//Endpoint#2 apartir de capacidad cual es el id_pelicula de la sala
+router.get('/:capacidad/id_pelicula', (req, res) => {
+    const capacidad = parseInt(req.params.capacidad);
+    const hallarid_pelicula = sala.find(s => s.capacidad === capacidad);
+    if (!hallarid_pelicula) {
+        return res.status(404).json({ message: 'Sala no encontrada' });
+    } else {
+        res.json({
+            message: 'Sala encontrada',
+            data: hallarid_pelicula
         });
     }
 })

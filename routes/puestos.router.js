@@ -16,16 +16,16 @@ router.post('/', (req, res) => {
     })
     res.json({
         message: 'Puesto Creado',
-        data: body.id
+        data: body.puesto
     })
 })
 
 router.patch('/:id', (req, res) => {
 
     const id = parseInt(req.params.id);
-    const puesto = puesto.find(s => s.id === id);
+    const puestos = puesto.find(s => s.id === id);
 
-    if (!puesto) {
+    if (!puestos) {
 
     }
 
@@ -33,13 +33,13 @@ router.patch('/:id', (req, res) => {
 
     actualizacionPuesto.forEach(campo => {
         if (req.body[campo] !== undefined) {
-            puesto[campo] = req.body[campo];
+            puestos[campo] = req.body[campo];
         }
     });
 
     res.json({
         message: 'Puesto actualizado',
-        data: puesto
+        data: puestos
     });
 });
 
@@ -55,7 +55,7 @@ router.delete('/:id', (req, res) => {
 
         res.json({
             message: 'Puesto eliminado',
-            data: puestoIndex
+            data: puestoEliminado
         });
     }
 
